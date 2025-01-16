@@ -29,7 +29,7 @@ import com.ecom.model.Ticket;
 import com.ecom.model.TicketOrder;
 import com.ecom.model.Trip;
 import com.ecom.model.UserDtls;
-import com.ecom.service.CartService;
+
 import com.ecom.service.OrderService;
 import com.ecom.service.TicketService;
 import com.ecom.service.TripService;
@@ -51,8 +51,6 @@ public class AdminController {
 	@Autowired
 	private UserService userService;
 
-	@Autowired
-	private CartService cartService;
 
 	@Autowired
 	private OrderService orderService;
@@ -71,8 +69,6 @@ public class AdminController {
 			String email = p.getName();
 			UserDtls userDtls = userService.getUserByEmail(email);
 			m.addAttribute("user", userDtls);
-			Integer countCart = cartService.getCountCart(userDtls.getId());
-			m.addAttribute("countCart", countCart);
 		}
 
 	}

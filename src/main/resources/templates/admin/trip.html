@@ -35,23 +35,17 @@
 								enctype="multipart/form-data">
 								<div class="mb-3">
 									<label>Nhập điểm đi</label> <input type="text"
-										name="startPoint" class="form-control">
+										name="start_point" class="form-control">
 								</div>
 								<div class="mb-3">
-									<label>Nhập điểm đến</label> <input type="text" name="endPoint"
+									<label>Nhập điểm đến</label> <input type="text" name="end_point"
 										class="form-control">
 								</div>
 
 								<div class="mb-3">
-									<label>Tình trạng</label> <input class="date has Datepicker"
-										id="datepicker" name="date" type="text" value="" required="">
-									<script>
-										$(function() {
-											$("#datepicker").datepicker({
-												dateFormat : "dd/mm/yy" // Định dạng ngày/tiếng Việt
-											});
-										});
-									</script>
+									<label>Ngày đi</label> <input class="date has Datepicker"
+										id="datepicker" name="departure_date" type="text" value="" required>
+								
 								</div>
 
 								<!--   	<div class="mb-3">

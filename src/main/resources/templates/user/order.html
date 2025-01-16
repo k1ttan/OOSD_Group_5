@@ -3,64 +3,45 @@
 	th:replace="~{base::layout(~{::section})}">
 <head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<title>Thông tin đơn hàng</title>
 </head>
 <body>
 	<section>
-
 		<div class="container mt-5 p-5">
-			<form action="/user/save-order" method="post" id="orders" novalidate>
+			<form action="/user/book-ticket" method="post" id="orders" novalidate>
 				<div class="row">
-
 					<div class="col-md-6">
-
-
 						<div class="mb-3 row">
-							<p class="text-center fs-4">Thông tin đặt hàng</p>
+							<p class="text-center fs-4">Thông tin đặt vé</p>
 							<hr>
-							<div class="col p-1">
-								<label>Họ</label> <input type="text" name="firstName" required
-									class="form-control mt-1">
-							</div>
-							<div class="col p-1">
-								<label>Tên</label> <input type="text" name="lastName" required
-									class="form-control mt-1">
-							</div>
-						</div>
+							<div class="col p-1" th:object="${order}">
+								<p>Mã đơn hàng: <span th:text="*{orderId}"></span></p>
+								<p>Ngày đặt: <span th:text="*{orderDate}"></span></p>
+								<p>Giá: <span th:text="*{price}"></span></p>
+								<p>Số lượng: <span th:text="*{quantity}"></span></p>
+								<p>Trạng thái: <span th:text="*{status}"></span></p>
+								<p>Phương thức thanh toán: <span th:text="*{paymentType}"></span></p>
 
-						<div class="mb-3 row">
-							<div class="col p-1">
-								<label>Email</label> <input type="email" name="email" required
-									class="form-control col">
-							</div>
-							<div class="col p-1">
-								<label>Số điện thoại</label> <input type="text" name="mobileNo"
-									required class="form-control col ms-2">
-							</div>
-						</div>
+								<!-- Thông tin chuyến đi -->
+								<h2>Thông tin chuyến đi</h2>
+								<p>Mã chuyến đi: <span th:text="${trip.id}"></span></p>
+								<p>Điểm đi: <span th:text="${trip.startPoint}"></span></p>
+								<p>Điểm đến: <span th:text="${trip.endPoint}"></span></p>
+								<p>Ngày đi: <span th:text="${trip.departureDate}"></span></p>
 
-						<div class="mb-3 row">
-							<div class="col p-1">
-								<label>Địa chỉ</label> <input type="text" name="address"
-									required class="form-control col">
-							</div>
-							<div class="col p-1">
-								<label>Thành phố</label> <input type="text" name="city" required
-									class="form-control col ms-2">
-							</div>
-						</div>
-						<div class="mb-3 row">
-							<div class="col p-1">
-								<label>Quốc gia</label> <input type="text" name="state" required
-									class="form-control col">
-							</div>
-							<div class="col p-1">
-								<label>Mã vận chuyển</label> <input type="number" name="pincode"
-									required class="form-control col ms-2">
-							</div>
-						</div>
-						<!-- </form> -->
+								<!-- Thông tin người dùng -->
+								<h2>Thông tin người dùng</h2>
+								<p>Tên người dùng: <span th:text="${user.name}"></span></p>
+								<p>Email: <span th:text="${user.email}"></span></p>
+								<p>Số điện thoại: <span th:text="${user.mobileNumber}"></span></p>
 
+								<!-- Thông tin địa chỉ -->
+								<h2>Thông tin địa chỉ</h2>
+								<p>Địa chỉ: <span th:text="*{orderAddress.address}"></span></p>
+								<p>Thành phố: <span th:text="*{orderAddress.city}"></span></p>
+								<p>Mã bưu điện: <span th:text="*{orderAddress.pincode}"></span></p>
+							</div>
+						</div>
 					</div>
 					<div class="col-md-6">
 						<p class="text-center fs-4">Hóa đơn</p>
@@ -72,13 +53,12 @@
 										<tr>
 											<td>Tổng</td>
 											<td>:</td>
-											<td>[[${orderPrice}]]&#8363;</td>
+											<td>[[${order.price}]]&#8363;</td>
 										</tr>
-
 										<tr class="border-top">
 											<td>Thành tiền</td>
 											<td>:</td>
-											<td>[[${totalOrderPrice}]]&#8363;</td>
+											<td>[[${order.price * order.quantity}]]&#8363;</td>
 										</tr>
 									</tbody>
 								</table>
@@ -86,30 +66,23 @@
 						</div>
 
 						<div class="card shadow p-3 mb-5 mt-2 bg-body-tertiary rounded">
-
 							<div class="card-body">
-								<!-- <form action="/login" method="post"> -->
 								<div class="mb-3">
-									<label class="form-label">Chọn phương thức thanh toán</label> <select
-										required name="paymentType" class="form-control">
+									<label class="form-label">Chọn phương thức thanh toán</label>
+									<select required name="paymentType" class="form-control">
 										<option value="">--select--</option>
 										<option value="COD">Tiền mặt</option>
 										<option value="ONLINE">Online Banking</option>
 									</select>
-
 								</div>
 
-								<button class="btn bg-primary text-white col-md-12">Đặt
-									Hàng</button>
-
+								<button class="btn bg-primary text-white col-md-12">Đặt Hàng</button>
 							</div>
 						</div>
 					</div>
-
 				</div>
 			</form>
 		</div>
-
 	</section>
 </body>
 </html>

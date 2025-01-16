@@ -36,4 +36,5 @@ public interface UserService {
 
 	public Boolean existsEmail(String email);
 
+	public UserDtls getUserById(int id);
 }

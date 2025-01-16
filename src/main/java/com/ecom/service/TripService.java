@@ -1,5 +1,6 @@
 package com.ecom.service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
@@ -23,4 +24,11 @@ public interface TripService {
 	public Page<Trip> getAllTripPagination(Integer pageNo, Integer pageSize);
 	
 	public Boolean existsTrip(int id);
+	
+	public List<Trip> findTrips(String startPoint, String endPoint, LocalDate departureDate);
+	
+	public List<String> getAllStartPoint();
+
+	public List<String> getAllEndPoint();
+
 }

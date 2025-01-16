@@ -129,10 +129,8 @@
 
 									</td>
 									<td>[[${o.orderDate}]]</td>
-									<td>[[${o.product.title}]]</td>
 									<td>Quantity : [[${o.quantity}]] <br>Price :
-										[[${o.price}]] <br>Total Price :[[${o.quantity *
-										o.price}]]
+										[[${o.price}]] <br>Total Price :[[${order.price * order.quantity}]]&#8363;
 									</td>
 									<td>[[${o.status}]]</td>
 									<td>

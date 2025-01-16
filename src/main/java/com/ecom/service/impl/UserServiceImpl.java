@@ -49,6 +49,10 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	public UserDtls getUserById(int id) {
+		return userRepository.findById(id);
+	}
+	@Override
 	public List<UserDtls> getUsers(String role) {
 		return userRepository.findByRole(role);
 	}

@@ -5,6 +5,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.ecom.model.Ticket;
 import com.ecom.model.Trip;
 import com.ecom.repository.TripRepository;
 import com.ecom.service.TripService;
@@ -53,6 +53,7 @@ public class TripServiceImpl implements TripService {
 	@Override
 	public Trip getTripById(Integer id) {
 		Trip Trip = tripRepository.findById(id).orElse(null);
+		
 		return Trip;
 	}
 	
@@ -81,4 +82,19 @@ public class TripServiceImpl implements TripService {
 	public Boolean existsTrip(int id) {
 		return tripRepository.existsById(id);
 	}
+
+	public List<Trip> findTrips(String startPoint, String endPoint, LocalDate departureDate) {
+        return tripRepository.findByStartPointAndEndPointAndDepartureDate(startPoint, endPoint, departureDate);
+    }
+	
+	public List<String> getAllStartPoint(){
+		return tripRepository.findDistinctStartPointsBy();
+	}
+
+	public List<String> getAllEndPoint(){
+		return tripRepository.findDistinctEndPointsBy();
+	}
+
+	
+	
 }

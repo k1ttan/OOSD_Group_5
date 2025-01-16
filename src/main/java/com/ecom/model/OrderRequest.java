@@ -1,5 +1,8 @@
 package com.ecom.model;
 
+import java.security.KeyStore.PrivateKeyEntry;
+
+import jakarta.persistence.ManyToOne;
 import lombok.Data;
 import lombok.ToString;
 
@@ -7,6 +10,13 @@ import lombok.ToString;
 @Data
 public class OrderRequest {
 
+	private UserDtls user;
+	
+	@ManyToOne
+	private Ticket ticket;
+	
+	private int quantity;
+	
 	private String firstName;
 
 	private String lastName;
