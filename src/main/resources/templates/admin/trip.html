@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{base::layout(~{::section})}">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<link rel="stylesheet"
+	href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+</head>
+<body>
+	<section>
+		<div class="container-fluid p-5 mt-5">
+			<div class="row">
+				<a href="/admin/" class="text-decoration-none"><i
+					class="fa-solid fa-arrow-left"></i> Quay Lại</a>
+				<div class="col-md-3">
+					<div class="card card-sh">
+						<div class="card-header text-center ">
+							<p class="fs-4">Thêm tuyến xe</p>
+							<th:block th:if="${session.succMsg}">
+								<p class="text-success fw-bold">[[${session.succMsg}]]</p>
+								<th:block th:text="${@commnServiceImpl.removeSessionMessage()}"></th:block>
+							</th:block>
+
+							<th:block th:if="${session.errorMsg}">
+								<p class="text-danger fw-bold">[[${session.errorMsg}]]</p>
+								<th:block th:text="${@commnServiceImpl.removeSessionMessage()}"></th:block>
+							</th:block>
+
+						</div>
+						<div class="card-body">
+							<form action="/admin/saveTrip" method="post"
+								enctype="multipart/form-data">
+								<div class="mb-3">
+									<label>Nhập điểm đi</label> <input type="text"
+										name="startPoint" class="form-control">
+								</div>
+								<div class="mb-3">
+									<label>Nhập điểm đến</label> <input type="text" name="endPoint"
+										class="form-control">
+								</div>
+
+								<div class="mb-3">
+									<label>Tình trạng</label> <input class="date has Datepicker"
+										id="datepicker" name="date" type="text" value="" required="">
+									<script>
+										$(function() {
+											$("#datepicker").datepicker({
+												dateFormat : "dd/mm/yy" // Định dạng ngày/tiếng Việt
+											});
+										});
+									</script>
+								</div>
+
+								<!--   	<div class="mb-3">
+									<label>Upload Image</label> <input type="file" name="file"
+										class="form-control">	
+								</div>-->
+								<button class="btn btn-primary col-md-12 mt-2">Lưu</button>
+							</form>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-md-8">
+					<div class="card card-sh">
+						<div class="card-header text-center fs-4">Danh sách Tuyến xe</div>
+						<div class="card-body">
+							<table class="table">
+								<thead>
+									<tr>
+										<th>#</th>
+										<th>Điểm đi</th>
+										<th>Điểm đến</th>
+										<th>Ngày đi</th>
+										<th>Action</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr th:each="trip, stat : ${trips}">
+										<td th:text="${stat.count}"></td>
+										<td th:text="${trip.startPoint}"></td>
+										<td th:text="${trip.endPoint}"></td>
+										<td th:text="${trip.departureDate}"></td>
+										<td><a th:href="@{'/admin/editTrip/' + ${trip.id}}"
+											class="btn btn-primary btn-sm">Sửa</a> <a
+											th:href="@{'/admin/deleteTrip/' + ${trip.id}}"
+											class="btn btn-danger btn-sm">Xóa</a></td>
+									</tr>
+								</tbody>
+							</table>
+
+							<div class="row">
+								<div class="col-md-4">Tổng số danh mục :
+									[[${totalElements}]]</div>
+								<div class="col-md-6">
+
+									<!--  	<nav aria-label="Page navigation example">
+										<ul class="pagination">
+											<li class="page-item"
+												th:classappend="${isFirst} ? 'disabled':''"><a
+												class="page-link"
+												th:href="@{'/admin/trip?pageNo='+${pageNo-1}}"
+												aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
+											</a></li>
+
+											<li th:each="i:${#numbers.sequence(1,totalPages)}"
+												class="page-item"
+												th:classappend="${pageNo+1==i}?'active':''" ]]><a
+												class="page-link"
+												th:href="@{'/admin/trip?pageNo='+${i-1}}">[[${i}]]</a></li>
+
+											<li class="page-item"
+												th:classappend="${isLast} ? 'disabled':''"><a
+												class="page-link"
+												th:href="@{'/admin/trip?pageNo='+${pageNo+1}}"
+												aria-label="Next"> <span aria-hidden="true">&raquo;</span>
+											</a></li>
+										</ul>
+									</nav> -->
+								</div>
+
+							</div>
+						</div>
+					</div>
+
+				</div>
+
+			</div>
+		</div>
+	</section>
+</body>
+</html>
