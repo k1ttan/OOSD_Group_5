@@ -11,7 +11,7 @@
 	<section>
 		<div class="container-fluid mt-4 p-3">
 			<div class="row">
-				<p class="text-center fs-3 mt-2">Sản phẩm</p>
+				<p class="text-center fs-3 mt-2">Vé</p>
 				<hr>
 				<a href="/admin/" class="text-decoration-none"><i
 					class="fa-solid fa-arrow-left"></i> Quay Lại</a>
@@ -31,7 +31,7 @@
 				</th:block>
 				<div class="col-md-4 p-3">
 
-					<form action="/admin/products" method="get">
+					<form action="/admin/tickets" method="get">
 						<div class="row">
 							<div class="col">
 								<input type="text" class="form-control " name="ch">
@@ -51,29 +51,18 @@
 						<thead class="table-light ">
 							<tr>
 								<th scope="col">Stt</th>
-								<th scope="col">Ảnh</th>
-								<th scope="col">Tên sản phẩm</th>
-								<th scope="col">Loại</th>
+								<th scope="col">Tên Hành Khách</th>
 								<th scope="col">Giá</th>
-								<th scope="col">Giảm Giá</th>
-								<th scope="col">Giá được giảm</th>
-								<th scope="col">Trạng thái</th>
 								<th scope="col">Số lượng</th>
 								<th scope="col">Action</th>
 							</tr>
 						</thead>
 						<tbody>
-							<tr th:each="p,c:${products}">
+							<tr th:each="p,c:${tickets}">
 								<th scope="row">[[${c.count}]]</th>
-								<td><img th:src="@{'/img/product_img/'+${p.image}}"
-									width="70px" height="70px"></td>
-								<td>[[${p.title}]]</td>
-								<td>[[${p.category}]]</td>
+								<td>[[${p.user.name}]]</td>
 								<td>[[${p.price}]]</td>
-								<td>[[${p.discount}]]</td>
-								<td>[[${p.discountPrice}]]</td>
-								<td>[[${p.isActive}]]</td>
-								<td>[[${p.stock}]]</td>
+								<td>[[${p.quantity}]]</td>
 								<td><a th:href="@{'/admin/editProduct/'+${p.id}}"
 									class="btn btn-sm btn-primary"><i
 										class="fa-solid fa-pen-to-square"></i>Sửa</a> <a
@@ -86,7 +75,7 @@
 					</table>
 
 					<div class="row">
-						<div class="col-md-4">Tổng Sản Phẩm : [[${totalElements}]]</div>
+						<div class="col-md-4">Tổng Vé : [[${totalElements}]]</div>
 						<div class="col-md-6">
 
 							<nav aria-label="Page navigation example">

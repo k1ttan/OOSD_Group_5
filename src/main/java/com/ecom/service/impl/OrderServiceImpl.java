@@ -45,10 +45,8 @@ public class OrderServiceImpl implements OrderService {
 
 			order.setOrderId(UUID.randomUUID().toString());
 			order.setOrderDate(LocalDate.now());
-
 			order.setTicket(cart.getTicket());
 			order.setPrice(cart.getTicket().getPrice());
-
 			order.setQuantity(cart.getQuantity());
 			order.setUser(cart.getUser());
 
@@ -64,7 +62,6 @@ public class OrderServiceImpl implements OrderService {
 			address.setCity(orderRequest.getCity());
 			address.setState(orderRequest.getState());
 			address.setPincode(orderRequest.getPincode());
-
 			order.setOrderAddress(address);
 
 //			TicketOrder saveOrder = orderRepository.save(order);

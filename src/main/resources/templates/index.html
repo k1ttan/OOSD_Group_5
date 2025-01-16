@@ -1,49 +1,74 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{base::layout(~{::section})}">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{base::layout(~{::section})}">
 <head>
-    <meta charset="ISO-8859-1">
-    <title>Đặt vé xe trực tuyến từ Quy Nhơn</title>
-    <link rel="stylesheet" href="/path/to/your/css/style.css"> <!-- Đường dẫn đến CSS của bạn -->
+<meta charset="ISO-8859-1">
+<title>Đặt vé xe trực tuyến từ Quy Nhơn</title>
 </head>
 <body>
-
-    <!-- Nội dung của trang chính tại đây -->
-    <div>
+	<section>
+	<div>
         <div id="carouselExample" class="carousel slide">
             <div class="carousel-inner">
                 <div class="carousel-item active">
-                    <img src="img/ecom1.png" class="d-block w-100" alt="..." height="350px">
-                </div>
-                <div class="carousel-item">
-                    <img src="img/ecom3.jpg" class="d-block w-100" alt="..." height="350px">
-                </div>
-                <div class="carousel-item">
-                    <img src="img/ecom2.jpg" class="d-block w-100" alt="..." height="350px">
+                    <img src="img/ecom1.png" class="d-block w-100" alt="..." width="345px" height="345px">
                 </div>
             </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Trang trước</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Trang sau</span>
-            </button>
-        </div>
-
-        <div class="row mt-4">
-            <h2 class="text-center">Danh sách chuyến đi</h2>
-            <div class="row" th:each="item : ${trip}">
-                <div class="col-md-4">
-                    <div class="card">
-                        <img src="img/ecom1.png" class="card-img-top" alt="Chuyến đi">
-                        <div class="card-body">
-                        </div>
-                    </div>
-                </div>
+             </div>
             </div>
-        </div>
-    </div>
+            
+		<div>
+			<h2>Tìm kiếm chuyến đi</h2>
+			<table class="table table-borderless">
+			<form th:action="@{/}" th:object="${trip}" method="post">
+				<div class="mb-3">
+					<label class="form-label">Điểm đi:</label> <input required
+						class="form-control" name="start_point" type="text">
+				</div>
 
+				<div class="mb-3">
+					<label class="form-label">Điểm đến:</label> <input required
+						class="form-control" name="end_point" type="text">
+				</div>
+				<div class="mb-3">
+					<label class="form-label">Ngày đi:</label> <input required
+						class="form-control" name="departure_date" type="date">
+				</div>
+
+				<button type="submit" class="btn bg-primary text-white col-md-12">Tìm
+					kiếm</button>
+			</form>
+		</div>
+</table>
+		<h2>Kết quả tìm kiếm</h2>
+		<div class="col-md-8">
+			<div class="card card-sh">
+				<div class="card-header text-center fs-4">Danh sách Tuyến xe</div>
+				<div class="card-body">
+					<table class="table">
+
+						<thead>
+							<tr>
+								<th>Điểm đi</th>
+								<th>Điểm đến</th>
+								<th>Ngày đi</th>
+								<th>Đặt vé</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="trip: ${trips}">
+								<td th:text="${trip.startPoint}"></td>
+								<td th:text="${trip.endPoint}"></td>
+								<td th:text="${trip.departureDate}"></td>
+								<!-- 	<td><a th:href="">Đặt vé</a></td> -->
+							</tr>
+						</tbody>
+
+					</table>
+				</div>
+			</div>
+		</div>
+
+	</section>
 </body>
 </html>

@@ -27,7 +27,7 @@
 	import org.springframework.web.bind.annotation.RequestParam;
 	import org.springframework.web.multipart.MultipartFile;
 	
-	import com.ecom.model.Category;
+
 	import com.ecom.model.Ticket;
 	import com.ecom.model.Trip;
 	import com.ecom.model.UserDtls;
@@ -80,12 +80,19 @@
 	
 		@GetMapping("/")
 		public String index(Model m) {
-	
-			List<Trip> allTrips = tripService.getAllTrips().stream().sorted((c1, c2) -> c2.getId().compareTo(c1.getId()))
-					.limit(6).toList();
-			m.addAttribute("trip", allTrips);
+			m.addAttribute("trip", new Trip());
+	        m.addAttribute("trips", tripService.getAllTrips());
+//			List<Trip> allTrips = tripService.getAllTrips().stream().sorted((c1, c2) -> c2.getId().compareTo(c1.getId()))
+//					.limit(6).toList();
+//			m.addAttribute("trip", allTrips);
 			return "index";
 		}
+		@PostMapping("/")
+	    public String searchTrips(@ModelAttribute("trip") Trip trip, Model model, String ch) {
+	        List<Trip> searchResults = tripService.searchTrip(ch);
+	        model.addAttribute("trip", searchResults);
+	        return "index";
+	    }
 	
 		@GetMapping("/signin")
 		public String login() {

@@ -27,6 +27,7 @@ public class Ticket {
 	private Double price;
 
 	private int quantity;
-
+	@ManyToOne
+	private Trip trip;
 
 }

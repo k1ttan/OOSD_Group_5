@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.ecom.model.Category;
+
 import com.ecom.model.Ticket;
 import com.ecom.model.TicketOrder;
 import com.ecom.model.Trip;
@@ -82,11 +82,11 @@ public class AdminController {
 		return "admin/index";
 	}
 
-	@GetMapping("/loadAddTicket")
+	@GetMapping("/loadAllTicket")
 	public String loadAddTicket(Model m) {
-		List<Trip> trip = tripService.getAllTrips();
-		m.addAttribute("trip", trip);
-		return "admin/add_ticket";
+		List<Ticket> tickets = ticketService.getAllTickets();
+		m.addAttribute("tickets", tickets);
+		return "admin/tickets";
 	}
 
 	@GetMapping("/trip")
