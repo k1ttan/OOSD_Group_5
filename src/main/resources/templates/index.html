@@ -10,51 +10,44 @@
 		<div id="carouselExample" class="carousel slide">
 			<div class="carousel-inner">
 				<div class="carousel-item active">
-					<img src="img/ecom1.png" class="d-block w-100" alt="..."
+					<img th:src="@{/img/ecom1.png}" class="d-block mx-auto w-75	" alt="..."
 						width="345px" height="345px">
 				</div>
 			</div>
 		</div>
-		<!-- <div class="container mt-5">
-        <h2 class="text-center mb-4">Tìm kiếm chuyến đi</h2>
-			<form th:action="@{/search}" method="get">
+		<div class="container mt-5">
+			<h2 class="text-center mb-4">Tìm kiếm chuyến đi</h2>
+			<form th:action="@{/user/search}" method="get">
 				<div class="mb-3">
-					<label class="form-label">Điểm đi</label>
-					<select class="form-select" th:each="trip, iterVar: loop">
-						Lặp qua danh sách startPoints và hiển thị từng mục
-						<option th:each="trip: ${trips}"
-							th:data-start-point="${trip.startPoint}" th:text="${trip.startPoint}"
-							onclick="selectStartPoint(this.getAttribute('data-start-point'))"></option>
+					<label class="form-label">Điểm đi</label> <select
+						class="form-select" name="startPoint">
+						<option value="">-- Chọn điểm đi --</option>
+						<option th:each="trip : ${trips}" th:value="${trip.startPoint}"
+							th:text="${trip.startPoint}"></option>
 					</select>
-					<input type="hidden" id="start_point" name="start_point" />
 				</div>
 
 				<div class="mb-3">
-					<label class="form-label">Điểm đến:</label> <select class="form-select" th:each="trip, iterVar: loop">
-						Lặp qua danh sách startPoints và hiển thị từng mục
-						<option th:each="trip: ${trips}"
-							th:data-start-point="${trip.endPoint}" th:text="${trip.endPoint}"
-							onclick="selectEndPoint(this.getAttribute('data-end-point'))"></option>
+					<label class="form-label">Điểm đến:</label> <select
+						class="form-select" name="endPoint">
+						<option value="">-- Chọn điểm đến --</option>
+						<option th:each="trip : ${trips}" th:value="${trip.endPoint}"
+							th:text="${trip.endPoint}"></option>
 					</select>
 				</div>
-				<div class="mb-3">
-					<label class="form-label">Ngày đi:</label> <input required
-						class="form-control" name="departure_date" type="date">
-				</div>
 
-				<button type="submit" class="btn btn-primary">Tìm
-					kiếm</button>
+				<button type="submit" class="btn btn-primary">Tìm kiếm</button>
 			</form>
-		</div> -->
-		
-		
-		
+		</div>
+
+
+
 		<div class="container-fluid bg-light p-3">
 			<div class="card card-sh">
 				<div class="card-header text-center fs-4">Danh sách Tuyến xe</div>
 				<div class="card-body">
-					<table class="table" th:action="@{/search}" method="post">
-
+					<table class="table"
+						th:if="${searchResults != null and !searchResults.empty}">
 						<thead>
 							<tr>
 								<th>Điểm đi</th>
@@ -63,14 +56,14 @@
 								<th>Đặt vé</th>
 							</tr>
 						</thead>
-						<tbody th:each="trip, iterVar: loop">
-							<tr th:each="trip: ${trips}">
+						<tbody>
+							<tr th:each="trip : ${searchResults}">
 								<td th:text="${trip.startPoint}"></td>
 								<td th:text="${trip.endPoint}"></td>
 								<td th:text="${trip.departureDate}"></td>
-								<td>
-										<button><a th:href="@{/user/orders(pid=${trip.id}, uid=${user.id})}">Đặt vé</a></button>
-								</td>
+								<td><a
+									th:href="@{/user/orders(pid=${trip.id}, uid=${user.id})}"
+									class="btn btn-primary">Đặt vé</a></td>
 							</tr>
 						</tbody>
 					</table>

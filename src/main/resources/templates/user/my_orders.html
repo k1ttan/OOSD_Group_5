@@ -1,53 +1,58 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
-	th:replace="~{base::layout(~{::section})}">
+      th:replace="~{base::layout(~{::section})}">
 <head>
-<meta charset="ISO-8859-1">
-<title>Insert title here</title>
+    <meta charset="ISO-8859-1">
+    <title>Danh sách đơn hàng</title>
 </head>
 <body>
-	<section>
-		<div class="container mt-5 p-5">
-			<div class="row">
-				<p class="text-center fs-3">Danh sách vé xe</p>
-				<th:block th:if="${session.succMsg}">
-					<p class="text-success fw-bold text-center">[[${session.succMsg}]]</p>
-					<th:block th:text="${@commnServiceImpl.removeSessionMessage()}"></th:block>
-				</th:block>
+<section>
+    <div class="container mt-5 p-5">
+        <div class="row">
+            <th:block th:if="${session.succMsg}">
+                <p class="text-success fw-bold text-center">[[${session.succMsg}]]</p>
+                <th:block th:text="${@commnServiceImpl.removeSessionMessage()}"></th:block>
+            </th:block>
 
-				<th:block th:if="${session.errorMsg}">
-					<p class="text-danger fw-bold text-center">[[${session.errorMsg}]]</p>
-					<th:block th:text="${@commnServiceImpl.removeSessionMessage()}"></th:block>
-				</th:block>
-				<div class="container-fluid bg-light p-3">
-					<h2 class="text-center mb-4">Danh sách đơn hàng</h2>
-					<div class="card card-sh">
-						<div class="card-header text-center fs-4">Đơn hàng của bạn</div>
-						<div class="card-body">
-							<table class="table">
-								<thead>
-									<tr>
-										<th>Mã đơn hàng</th>
-										<th>Ngày đặt</th>
-										<th>Tổng tiền</th>
-										<th>Trạng thái</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr th:each="order : ${orders}">
-										<td th:text="${order.orderId}"></td>
-										<td th:text="${order.orderDate}"></td>
-										<td th:text="${order.price * order.quantity}"></td>
-										<td th:text="${order.status}"></td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
-					</div>
-				</div>
-			</div>
-
-		</div>
-	</section>
+            <th:block th:if="${session.errorMsg}">
+                <p class="text-danger fw-bold text-center">[[${session.errorMsg}]]</p>
+                <th:block th:text="${@commnServiceImpl.removeSessionMessage()}"></th:block>
+            </th:block>
+            <div class="container-fluid bg-light p-3">
+                <div class="card card-sh">
+                    <div class="card-header text-center fs-4">Danh sách vé xe</div>
+                    <div class="card-body">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Mã vé</th>
+                                    <th>Ngày đặt</th>
+                                    <th>Điểm đi</th>
+                                    <th>Điểm đến</th>
+                                    <th>Giá vé</th>
+                                    <th>Số lượng</th>
+                                    <th>Tổng tiền</th>
+                                    <th>Trạng thái</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="order : ${orders}">
+                                    <td th:text="${order.orderId}"></td>
+                                    <td th:text="${order.orderDate}"></td>
+                                    <td th:text="${order.trip != null ? order.trip.startPoint : 'N/A'}"></td>
+                                    <td th:text="${order.trip != null ? order.trip.endPoint : 'N/A'}"></td>
+                                    <td th:text="${order.trip != null ? order.trip.price : 'N/A'}"></td>
+                                    <td th:text="${order.quantity}"></td>
+                                    <td th:text="${order.price}"></td>
+                                    <td th:text="${order.status}"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 </body>
 </html>

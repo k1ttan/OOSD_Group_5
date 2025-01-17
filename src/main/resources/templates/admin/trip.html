@@ -31,29 +31,39 @@
 
 						</div>
 						<div class="card-body">
-							<form action="/admin/saveTrip" method="post"
-								enctype="multipart/form-data">
-								<div class="mb-3">
-									<label>Nhập điểm đi</label> <input type="text"
-										name="start_point" class="form-control">
-								</div>
-								<div class="mb-3">
-									<label>Nhập điểm đến</label> <input type="text" name="end_point"
-										class="form-control">
-								</div>
+							<div class="container mt-5">
+								<form th:action="@{/admin/search}" method="get"
+									enctype="multipart/form-data">
+									<div class="mb-3">
+										<label class="form-label">Điểm đi</label> <select
+											class="form-select" th:each="trip, iterVar: loop">
+											<option th:each="trip: ${trips}"
+												th:data-start-point="${trip.startPoint}"
+												th:text="${trip.startPoint}"
+												onclick="selectStartPoint(this.getAttribute('data-start-point'))"></option>
+										</select> <input type="hidden" id="start_point" name="start_point" />
+									</div>
 
-								<div class="mb-3">
-									<label>Ngày đi</label> <input class="date has Datepicker"
-										id="datepicker" name="departure_date" type="text" value="" required>
-								
-								</div>
-
-								<!--   	<div class="mb-3">
-									<label>Upload Image</label> <input type="file" name="file"
-										class="form-control">	
-								</div>-->
-								<button class="btn btn-primary col-md-12 mt-2">Lưu</button>
-							</form>
+									<div class="mb-3">
+										<label class="form-label">Điểm đến:</label> <select
+											class="form-select" th:each="trip, iterVar: loop">
+											<option th:each="trip: ${trips}"
+												th:data-start-point="${trip.endPoint}"
+												th:text="${trip.endPoint}"
+												onclick="selectEndPoint(this.getAttribute('data-end-point'))"></option>
+										</select>
+									</div>
+									<div class="mb-3">
+										<label class="form-label">Ngày đi:</label> <input required
+											class="form-control" name="departure_date" type="date">
+									</div>
+									<div class="mb-3">
+										<label class="form-label">Giá</label> <input required
+											class="form-control" name="price" type="text">
+									</div>
+									<button type="submit" class="btn btn-primary">Lưu</button>
+								</form>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -78,7 +88,7 @@
 										<td th:text="${trip.startPoint}"></td>
 										<td th:text="${trip.endPoint}"></td>
 										<td th:text="${trip.departureDate}"></td>
-										<td><a th:href="@{'/admin/editTrip/' + ${trip.id}}"
+										<td><a th:href="@{'/admin/loadEditTrip/' + ${trip.id}}"
 											class="btn btn-primary btn-sm">Sửa</a> <a
 											th:href="@{'/admin/deleteTrip/' + ${trip.id}}"
 											class="btn btn-danger btn-sm">Xóa</a></td>

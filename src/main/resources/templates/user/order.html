@@ -15,12 +15,10 @@
 							<p class="text-center fs-4">Thông tin đặt vé</p>
 							<hr>
 							<div class="col p-1" th:object="${order}">
-								<p>Mã đơn hàng: <span th:text="*{orderId}"></span></p>
+								<p>Mã vé: <span th:text="*{orderId}"></span></p>
 								<p>Ngày đặt: <span th:text="*{orderDate}"></span></p>
 								<p>Giá: <span th:text="*{price}"></span></p>
 								<p>Số lượng: <span th:text="*{quantity}"></span></p>
-								<p>Trạng thái: <span th:text="*{status}"></span></p>
-								<p>Phương thức thanh toán: <span th:text="*{paymentType}"></span></p>
 
 								<!-- Thông tin chuyến đi -->
 								<h2>Thông tin chuyến đi</h2>
@@ -34,9 +32,6 @@
 								<p>Tên người dùng: <span th:text="${user.name}"></span></p>
 								<p>Email: <span th:text="${user.email}"></span></p>
 								<p>Số điện thoại: <span th:text="${user.mobileNumber}"></span></p>
-
-								<!-- Thông tin địa chỉ -->
-								<h2>Thông tin địa chỉ</h2>
 								<p>Địa chỉ: <span th:text="*{orderAddress.address}"></span></p>
 								<p>Thành phố: <span th:text="*{orderAddress.city}"></span></p>
 								<p>Mã bưu điện: <span th:text="*{orderAddress.pincode}"></span></p>
@@ -76,7 +71,7 @@
 									</select>
 								</div>
 
-								<button class="btn bg-primary text-white col-md-12">Đặt Hàng</button>
+								<button class="btn bg-primary text-white col-md-12">Đặt Vé</button>
 							</div>
 						</div>
 					</div>

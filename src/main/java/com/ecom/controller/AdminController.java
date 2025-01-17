@@ -138,11 +138,16 @@ public class AdminController {
 		return "redirect:/admin/trip";
 	}
 
-	@GetMapping("/loadEditTrip/{id}")
-	public String loadEditTrip(@PathVariable int id, Model m) {
-		m.addAttribute("trip", tripService.getTripById(id));
-		return "admin/edit_trip";
-	}
+	@GetMapping("/admin/loadEditTrip/{id}")
+	public String loadEditTrip(@PathVariable("id") int id, Model model, HttpSession session) {
+        Trip trip = tripService.getTripById(id); // Lấy thông tin Trip từ service
+        if (trip != null) {
+            model.addAttribute("trip", trip); // Truyền dữ liệu Trip vào model
+        } else {
+            session.setAttribute("errorMsg", "Không tìm thấy tuyến xe");
+        }
+        return "admin/edit_trip"; // Trả về view edit_trip.html
+    }
 
 	@PostMapping("/updateTrip")
 	public String updateCategory(@ModelAttribute Trip trip,
@@ -166,7 +171,7 @@ public class AdminController {
 			session.setAttribute("errorMsg", "Lỗi hệ thống");
 		}
 
-		return "redirect:/admin/loadEditCategory/" + trip.getId();
+		return "redirect:/admin/loadEditTrip/" + trip.getId();
 	}
 
 	@PostMapping("/saveTicket")
@@ -263,10 +268,6 @@ public class AdminController {
 	@GetMapping("/orders")
 	public String getAllOrders(Model m, @RequestParam(name = "pageNo", defaultValue = "0") Integer pageNo,
 			@RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize) {
-//		List<ProductOrder> allOrders = orderService.getAllOrders();
-//		m.addAttribute("orders", allOrders);
-//		m.addAttribute("srch", false);
-
 		Page<TicketOrder> page = orderService.getAllOrdersPagination(pageNo, pageSize);
 		m.addAttribute("orders", page.getContent());
 		m.addAttribute("srch", false);
@@ -277,6 +278,8 @@ public class AdminController {
 		m.addAttribute("totalPages", page.getTotalPages());
 		m.addAttribute("isFirst", page.isFirst());
 		m.addAttribute("isLast", page.isLast());
+
+
 
 		return "/admin/orders";
 	}

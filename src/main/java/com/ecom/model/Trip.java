@@ -30,5 +30,6 @@ public class Trip {
 
     @Column(name = "departure_date", nullable = false)
     private LocalDate departureDate;
+    
     private Double price;
 }

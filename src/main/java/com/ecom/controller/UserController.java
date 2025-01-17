@@ -8,6 +8,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -60,10 +61,11 @@ public class UserController {
 
 
 	@GetMapping("/")
-	public String home() {
-		return "user/home";
+	public String home(Model model) {
+	    List<Trip> trips = tripRepository.findAll();
+	    model.addAttribute("trips", trips);
+	    return "user/index";
 	}
-
 	@ModelAttribute
 	public void getUserDetails(Principal p, Model m) {
 		if (p != null) {
@@ -151,17 +153,44 @@ public class UserController {
 
 	@GetMapping("/success")
 	public String loadSuccess() {
-	    return "/user/success";
+		return "/user/success";
 	}
 
 	@GetMapping("/user-orders")
 	public String myOrder(Model m, Principal p) {
 	    UserDtls loginUser = getLoggedInUserDetails(p);
 	    List<TicketOrder> orders = orderService.getOrdersByUser(loginUser.getId());
+	    
+	    // Truyền danh sách đơn hàng vào model
 	    m.addAttribute("orders", orders);
+	    
 	    return "/user/my_orders";
 	}
 	
+	@GetMapping("/search")
+	public String searchTrips(
+	    @RequestParam(required = false) String startPoint,
+	    @RequestParam(required = false) String endPoint,
+	    @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate departureDate,
+	    Model model
+	) {
+	    List<Trip> searchResults;
+	    if (startPoint != null && endPoint != null) {
+	        searchResults = tripRepository.findByStartPointAndEndPoint(startPoint, endPoint);
+	    } else if (startPoint != null) {
+	        searchResults = tripRepository.findByStartPointContainingIgnoreCase(startPoint);
+	    } else if (endPoint != null) {
+	        searchResults = tripRepository.findByEndPointContainingIgnoreCase(endPoint);
+	    } else {
+	        searchResults = tripRepository.findAll();
+	    }
+
+	    model.addAttribute("searchResults", searchResults);
+	    List<Trip> trips = tripRepository.findAll();
+	    model.addAttribute("trips", trips);
+
+	    return "index";
+	}
 	
 	@PostMapping("/book-ticket")
 	public String bookTicket(@ModelAttribute OrderRequest orderRequest, Principal p, HttpSession session) {
@@ -172,7 +201,7 @@ public class UserController {
 	    } catch (Exception e) {
 	        session.setAttribute("errorMsg", "Đặt vé thất bại: " + e.getMessage());
 	    }
-	    return "redirect:/user/orders";
+	    return "redirect:/user/success";
 	}
 	@GetMapping("/update-status")
 	public String updateOrderStatus(@RequestParam Integer id, @RequestParam Integer st, HttpSession session) {

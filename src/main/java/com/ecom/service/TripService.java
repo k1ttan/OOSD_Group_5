@@ -25,7 +25,7 @@ public interface TripService {
 	
 	public Boolean existsTrip(int id);
 	
-	public List<Trip> findTrips(String startPoint, String endPoint, LocalDate departureDate);
+	public List<Trip> findTrips(String startPoint, String endPoint);
 	
 	public List<String> getAllStartPoint();
 

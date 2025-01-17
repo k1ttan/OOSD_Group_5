@@ -83,16 +83,16 @@ public class TripServiceImpl implements TripService {
 		return tripRepository.existsById(id);
 	}
 
-	public List<Trip> findTrips(String startPoint, String endPoint, LocalDate departureDate) {
-        return tripRepository.findByStartPointAndEndPointAndDepartureDate(startPoint, endPoint, departureDate);
+	public List<Trip> findTrips(String startPoint, String endPoint) {
+        return tripRepository.findByStartPointAndEndPoint(startPoint, endPoint);
     }
 	
 	public List<String> getAllStartPoint(){
-		return tripRepository.findDistinctStartPointsBy();
+		return tripRepository.findAllDistinctStartPoints();
 	}
 
 	public List<String> getAllEndPoint(){
-		return tripRepository.findDistinctEndPointsBy();
+		return tripRepository.findAllDistinctEndPoints();
 	}
 
 	

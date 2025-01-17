@@ -94,9 +94,8 @@
 			@PostMapping("/search")
 		    public String searchTrips(@RequestParam String start_point, 
 	                @RequestParam String end_point, 
-	                @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate departure_date, 
 	                Model model) {
-				List<Trip> trips = tripService.findTrips(start_point, end_point, departure_date);
+				List<Trip> trips = tripService.findTrips(start_point, end_point);
 			    model.addAttribute("trips", trips);
 		        return "index";
 		    }
